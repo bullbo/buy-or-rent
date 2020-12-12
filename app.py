@@ -53,9 +53,8 @@ def calcs(years, rent, rent_increase, loan, intrest, amort, fee, fee_increase):
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
-
-
-
+server = app.server
+app.title= "BoR"
 
 app.layout = html.Div(children=[
     html.H1(children='BoR: Buy or Rent'),
