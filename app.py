@@ -1,54 +1,11 @@
 # -*- coding: utf-8 -*-
 
-# Run this app with `python app.py` and
-# visit http://127.0.0.1:8050/ in your web browser.
-
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
-import numpy as np
 import plotly.graph_objects as go
-
-
-def _intrest(arr, rate):
-  for i in range(1,len(arr)):
-    arr[i] = arr[i-1]*rate
-  return arr
-
-
-def calcs(years, rent, rent_increase, loan, intrest, amort, fee, fee_increase):
-    ones = np.ones(years)
-    years = np.arange(1, years+1)
-    rent = rent*12
-    fee = fee*12
-    rent_increase /= 100
-    amort /= 100
-    intrest /= 100
-    fee_increase /= 100
-
-    amort_left = _intrest(loan*ones, 1-amort)
-
-    yearly_rent = _intrest(rent*ones, 1+rent_increase)
-    yearly_fee = _intrest(fee*ones, 1+fee_increase)
-    yearly_intrest = amort_left*intrest
-    yearly_buy = yearly_fee+yearly_intrest
-
-    cost_rent = np.cumsum(yearly_rent)
-    cost_fee = np.cumsum(yearly_fee)
-    cost_intrest = np.cumsum(yearly_intrest)
-    cost_buy = np.cumsum(yearly_buy)
-
-    return {"yearly-rent"   : yearly_rent,
-            "yearly-fee"    : yearly_fee,
-            "yearly-intrest": yearly_intrest,
-            "yearly-buy"    : yearly_buy,
-            "cost-rent"     : cost_rent, 
-            "cost-fee"      : cost_fee,
-            "cost-intrest"  : cost_intrest,
-            "cost-buy"      :cost_buy,
-            "amort-left"    : amort_left}
-
+from calcs import calcs
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
@@ -60,7 +17,7 @@ app.layout = html.Div(children=[
     html.H1(children='BoR: Buy or Rent'),
 
     html.Div(children='''
-        A web application that simplifies and visualises the costs that arises from buying versus renting a house.
+        A web application that simplifies and visualises the costs that arises from buying versus renting a house. For the mandem in the Pepe Discord
     '''),
 
     html.H2("Parameters:"),
@@ -207,4 +164,4 @@ def toggle_container(toggle_value):
         return {'display': 'none'}
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server()
