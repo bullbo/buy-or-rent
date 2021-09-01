@@ -15,7 +15,7 @@ pip install -r requirements.txt
 
 [Numpy](https://numpy.org/) - Package for scientific computing with Python
 
-## Live Preview:
+## Live Preview
 A live preview is available at http://bor-app.herokuapp.com/
 
 ## Authors
